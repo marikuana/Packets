@@ -1,12 +1,13 @@
 ﻿using System.Numerics;
+using System.IO;
 
 namespace Packets
 {
     public static class BinaryReaderExtensions
     {
-        public static Vector3 ReadVector3(this BinaryReader reader)
+        public static System.Numerics.Vector3 ReadVector3(this BinaryReader reader)
         {
-            return new Vector3(reader.ReadSingle(), reader.ReadSingle(), reader.ReadSingle());
+            return new System.Numerics.Vector3(reader.ReadSingle(), reader.ReadSingle(), reader.ReadSingle());
         }
     }
 }

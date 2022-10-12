@@ -1,4 +1,6 @@
 ﻿using System.Reflection;
+using System.IO;
+using System;
 
 namespace Packets
 {
@@ -10,12 +12,19 @@ namespace Packets
             
             PacketType packetType = (PacketType)reader.ReadUInt16();
 
-            Packet packet = packetType switch
+            Packet packet;
+            switch (packetType)
             {
-                PacketType.Ping => new Ping(),
-                PacketType.GoTo => new GoTo(),
-                _ => throw new ArgumentException(),
+                case PacketType.Ping:
+                    packet = new Ping();
+                    break;
+                case PacketType.GoTo:
+                    packet = new GoTo();
+                    break;
+                default:
+                    throw new ArgumentException();
             };
+            
             packet.Read(reader);
             return packet;
         }

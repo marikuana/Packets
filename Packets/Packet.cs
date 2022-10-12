@@ -1,4 +1,6 @@
-﻿namespace Packets
+﻿using System.IO;
+
+namespace Packets
 {
     public abstract class Packet
     {
