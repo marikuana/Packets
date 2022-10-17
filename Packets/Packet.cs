@@ -4,7 +4,7 @@ namespace Packets
 {
     public abstract class Packet
     {
-        protected abstract PacketType packetType { get; }
+        public abstract PacketType packetType { get; }
 
         protected internal virtual void Read(BinaryReader reader) { }
         protected virtual void Write(BinaryWriter writer) { }

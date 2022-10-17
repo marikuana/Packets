@@ -5,7 +5,7 @@ namespace Packets
 {
     public class GoTo : Packet
     {
-        protected override PacketType packetType => PacketType.GoTo;
+        public override PacketType packetType => PacketType.GoTo;
 
         public int EntityId { get; set; }
         public System.Numerics.Vector3 Position { get; set; }

@@ -2,6 +2,6 @@
 {
     public class Ping : Packet
     {
-        protected override PacketType packetType => PacketType.Ping;
+        public override PacketType packetType => PacketType.Ping;
     }
 }

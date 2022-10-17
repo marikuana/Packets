@@ -3,6 +3,8 @@
     public enum PacketType : ushort
     {
         Ping = 0,
-        GoTo
+        GoTo,
+
+        Batch = ushort.MaxValue
     }
 }
