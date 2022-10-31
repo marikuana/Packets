@@ -1,5 +1,6 @@
 ﻿using NUnit.Framework;
 using Packets;
+using System;
 
 namespace TestPackets
 {
@@ -16,7 +17,7 @@ namespace TestPackets
         [Test]
         public void Test()
         {
-            GoTo goTo = new GoTo() { EntityId = 1, Position = new System.Numerics.Vector3(1, -2, 1.23f) };
+            GoTo goTo = new GoTo() { EntityId = Guid.NewGuid(), Position = new System.Numerics.Vector3(1, -2, 1.23f) };
 
             byte[] data = goTo.GetBytes();
             Packet packet = PacketFactory.GetPacket(data);

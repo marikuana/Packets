@@ -1,5 +1,6 @@
 ﻿using NUnit.Framework;
 using Packets;
+using System;
 using System.Numerics;
 
 namespace TestPackets
@@ -21,9 +22,9 @@ namespace TestPackets
             {
                 Packets = new Packet[]
                 {
-                    new GoTo() { EntityId = 1, Position = new Vector3(1, -2, 1.23f) },
+                    new GoTo() { EntityId = Guid.NewGuid(), Position = new Vector3(1, -2, 1.23f) },
                     new Ping(),
-                    new GoTo() { EntityId = 2, Position = new Vector3(2, -3, 555) }
+                    new GoTo() { EntityId = Guid.NewGuid(), Position = new Vector3(2, -3, 555) }
                 }
             };
 
