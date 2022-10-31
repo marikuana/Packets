@@ -1,5 +1,6 @@
 ﻿using System.Numerics;
 using System.IO;
+using System;
 
 namespace Packets
 {
@@ -7,12 +8,12 @@ namespace Packets
     {
         public override PacketType packetType => PacketType.GoTo;
 
-        public int EntityId { get; set; }
+        public Guid EntityId { get; set; }
         public System.Numerics.Vector3 Position { get; set; }
 
         protected internal override void Read(BinaryReader reader)
         {
-            EntityId = reader.ReadInt32();
+            EntityId = reader.ReadGuid();
             Position = reader.ReadVector3();
         }
 
