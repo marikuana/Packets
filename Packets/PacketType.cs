@@ -5,6 +5,9 @@
         Ping = 0,
         GoTo,
 
+        Request,
+        Responce,
+
         Batch = ushort.MaxValue
     }
 }
