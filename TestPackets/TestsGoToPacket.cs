@@ -7,11 +7,12 @@ namespace TestPackets
     public class TestsGoToPacket
     {
         public PacketFactory PacketFactory { get; set; }
-
+        public IServiceProvider ServiceProvider { get; set; }
         [SetUp]
         public void Setup()
         {
-            PacketFactory = new PacketFactory();
+            ServiceProvider = new ServiceProvider();
+            PacketFactory = (PacketFactory)ServiceProvider.GetService(typeof(PacketFactory));
         }
 
         [Test]

@@ -1,16 +1,18 @@
 using NUnit.Framework;
 using Packets;
+using System;
 
 namespace TestPackets
 {
     public class TestsPingPacket
     {
         public PacketFactory PacketFactory { get; set; }
-
+        public IServiceProvider ServiceProvider { get; set; }
         [SetUp]
         public void Setup()
         {
-            PacketFactory = new PacketFactory();
+            ServiceProvider = new ServiceProvider();
+            PacketFactory = (PacketFactory)ServiceProvider.GetService(typeof(PacketFactory));
         }
 
         [Test]
