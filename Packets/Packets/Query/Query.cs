@@ -8,6 +8,13 @@ namespace Packets
         public Guid Id { get; set; }
         public Packet Packet { get; set; }
 
+        private PacketFactory _packetFactory;
+
+        public Query(PacketFactory packetFactory)
+        {
+            _packetFactory = packetFactory;
+        }
+
         protected override void Write(BinaryWriter writer)
         {
             writer.Write(Id);
@@ -16,10 +23,8 @@ namespace Packets
 
         protected internal override void Read(BinaryReader reader)
         {
-            PacketFactory factory = new PacketFactory();
-
             Id = reader.ReadGuid();
-            Packet = factory.GetPacket(reader.ReadBytes((int)(reader.BaseStream.Length - reader.BaseStream.Position)));
+            Packet = _packetFactory.GetPacket(reader.ReadBytes((int)(reader.BaseStream.Length - reader.BaseStream.Position)));
         }
     }
 }
