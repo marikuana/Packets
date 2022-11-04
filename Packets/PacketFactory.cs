@@ -3,6 +3,7 @@ using System.IO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.Extensions.Logging;
 
 namespace Packets
 {
@@ -10,10 +11,12 @@ namespace Packets
     {
         private Dictionary<PacketType, ConstructorInfo> packets;
         private IServiceProvider _service;
+        private ILogger _logger;
 
-        public PacketFactory(IServiceProvider service)
+        public PacketFactory(IServiceProvider service, ILogger<PacketFactory> logger)
         {
             _service = service;
+            _logger = logger;
             packets = new Dictionary<PacketType, ConstructorInfo>();
             IEnumerable <Type> packetTypes = Assembly.GetExecutingAssembly().GetTypes().Where(t => t.IsSubclassOf(typeof(Packet)) && !t.IsAbstract);
             foreach (Type type in packetTypes)
@@ -26,6 +29,9 @@ namespace Packets
 
         private Packet CreatePacket(PacketType packetType)
         {
+            if (!packets.ContainsKey(packetType))
+                throw new ArgumentException($"Packet type {packetType} not registered");
+
             ConstructorInfo constructor = packets[packetType];
             ParameterInfo[] parameterInfos = constructor.GetParameters();
             object[] parameters = new object[parameterInfos.Length];
@@ -36,16 +42,24 @@ namespace Packets
             return (Packet)constructor.Invoke(parameters);
         }
 
-        public Packet GetPacket(byte[] buffer)
+        public Packet? GetPacket(byte[] buffer)
         {
-            var reader = new BinaryReader(new MemoryStream(buffer));
-            
-            PacketType packetType = (PacketType)reader.ReadUInt16();
+            try
+            {
+                var reader = new BinaryReader(new MemoryStream(buffer));
 
-            Packet packet = CreatePacket(packetType);
+                PacketType packetType = (PacketType)reader.ReadUInt16();
 
-            packet.Read(reader);
-            return packet;
+                Packet packet = CreatePacket(packetType);
+
+                packet.Read(reader);
+                return packet;
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, e.Message);
+                return null;
+            }
         }
     }
 }
