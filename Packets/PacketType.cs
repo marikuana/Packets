@@ -4,6 +4,7 @@
     {
         Ping = 0,
         GoTo,
+        Destroy,
 
         Request,
         Responce,
