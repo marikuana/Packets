@@ -61,5 +61,26 @@ namespace Packets
                 return null;
             }
         }
+
+        public int GetPacket(byte[] buffer, out Packet? packet)
+        {
+            try
+            {
+                var reader = new BinaryReader(new MemoryStream(buffer));
+
+                PacketType packetType = (PacketType)reader.ReadUInt16();
+
+                packet = CreatePacket(packetType);
+
+                packet.Read(reader);
+                return (int)reader.BaseStream.Position;
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, e.Message);
+                packet = null;
+                return 0;
+            }
+        }
     }
 }
