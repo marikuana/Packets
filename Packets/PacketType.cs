@@ -3,8 +3,9 @@
     public enum PacketType : ushort
     {
         Ping = 0,
-        GoTo,
+        Create,
         Destroy,
+        GoTo,
 
         Request,
         Responce,
