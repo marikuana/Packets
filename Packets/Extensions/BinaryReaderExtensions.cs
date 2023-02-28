@@ -17,23 +17,23 @@ namespace Packets
             return new Guid(reader.ReadBytes(count));
         }
 
-        public static CustomData<T> ReadCustomData<T>(this BinaryReader reader)
+        public static CustomData ReadCustomData(this BinaryReader reader)
         {
             TypeCode typeCode = (TypeCode)reader.ReadInt32();
-            T data = (T)reader.ReadObject(typeCode);
-            return new CustomData<T>()
+            object data = reader.ReadObject(typeCode);
+            return new CustomData()
             {
                 Type = typeCode,
                 Data = data
             };
         }
 
-        public static CustomData<T>[] ReadCustomDatas<T>(this BinaryReader reader)
+        public static CustomData[] ReadCustomDatas(this BinaryReader reader)
         {
             int count = reader.ReadInt32();
-            CustomData<T>[] data = new CustomData<T>[count];
+            CustomData[] data = new CustomData[count];
             for (int i = 0; i < count; i++)
-                data[i] = ReadCustomData<T>(reader);
+                data[i] = ReadCustomData(reader);
             return data;
         }
 

@@ -2,9 +2,9 @@
 
 namespace Packets
 {
-    public class CustomData<T>
+    public class CustomData
     {
         public TypeCode Type { get; set; }
-        public T Data { get; set; }
+        public object Data { get; set; }
     }
 }

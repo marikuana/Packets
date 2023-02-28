@@ -20,14 +20,14 @@ namespace Packets
             writer.Write(data);
         }
 
-        public static void Write<T>(this BinaryWriter writer, CustomData<T>[] customData)
+        public static void Write(this BinaryWriter writer, CustomData[] customData)
         {
             writer.Write(customData.Length);
             for (int i = 0; i < customData.Length; i++)
                 writer.Write(customData[i]);          
         }
 
-        public static void Write<T>(this BinaryWriter writer, CustomData<T> customData)
+        public static void Write(this BinaryWriter writer, CustomData customData)
         {
             TypeCode typeCode = customData.Type;
             writer.Write((int)typeCode);
