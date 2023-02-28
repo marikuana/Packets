@@ -8,6 +8,7 @@
 
         Request,
         Responce,
+        CustomData,
 
         Batch = ushort.MaxValue
     }
